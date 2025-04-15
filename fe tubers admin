@@ -1,0 +1,343 @@
+-- tubers's FE admin v1
+
+local screenGui = Instance.new("ScreenGui")
+screenGui.Name = "CommandGui"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+
+-- Create the TextBox
+local textBox = Instance.new("TextBox")
+textBox.Size = UDim2.new(0.8, 0, 0.05, 0) -- Long rectangle at the top
+textBox.Position = UDim2.new(0.1, 0, 0, 10) -- Centered horizontally at the top with slight margin
+textBox.BackgroundColor3 = Color3.fromRGB(128, 128, 128) -- Gray color
+textBox.BackgroundTransparency = 0.5 -- Semi-transparent
+textBox.Text = "Type a command with the prefix ':' (e.g., :cmds)"
+textBox.TextColor3 = Color3.fromRGB(255, 255, 255) -- White text
+textBox.Font = Enum.Font.SourceSans
+textBox.TextScaled = true
+textBox.Parent = screenGui
+
+local duckRainExecuted = false -- Track if duckrain has been executed
+
+-- Function to handle TextBox input
+textBox.FocusLost:Connect(function(enterPressed)
+    if enterPressed then
+        local inputText = textBox.Text:lower() -- Convert input to lowercase for consistency
+
+        -- Handle empty input
+        if inputText == "" then
+            textBox.Text = "no script entered"
+            print("[INFO] No script entered in the TextBox!")
+            return
+        end
+
+        -- Handle ":cmds" command
+        if inputText == ":cmds" then
+            -- Display available commands
+            local textLabel = Instance.new("TextLabel")
+            textLabel.Size = textBox.Size -- Same size as TextBox
+            textLabel.Position = UDim2.new(0.1, 0, 0.1, 20) -- Slightly below the TextBox
+            textLabel.BackgroundColor3 = textBox.BackgroundColor3 -- Same background color
+            textLabel.BackgroundTransparency = textBox.BackgroundTransparency -- Same transparency
+            textLabel.TextColor3 = textBox.TextColor3 -- Same text color
+            textLabel.Font = textBox.Font -- Same font
+            textLabel.TextScaled = textBox.TextScaled -- Same text scaling
+            textLabel.Text = "cmds: :G00bysStigmaV2Spam, :SSC, :Console, :credits, :duckrain"
+            textLabel.Parent = screenGui
+
+            print("[INFO] Commands displayed successfully!")
+
+            -- Remove label after 10 seconds
+            task.delay(10, function()
+                if textLabel.Parent then
+                    textLabel:Destroy()
+                end
+            end)
+        -- Handle ":duckrain" command
+        elseif inputText == ":duckrain" then
+            if not duckRainExecuted then
+                duckRainExecuted = true
+                print("[INFO] Duck rain executed successfully!")
+
+                -- Duck rain logic
+                local meshId = "rbxassetid://7102117818"
+                local function spawnMesh()
+                    local part = Instance.new("Part")
+                    part.Size = Vector3.new(2, 2, 2)
+                    part.Anchored = false
+                    part.Position = Vector3.new(math.random(-50, 50), 100, math.random(-50, 50))
+                    part.BrickColor = BrickColor.new("Bright yellow")
+                    part.Parent = game.Workspace
+
+                    local mesh = Instance.new("SpecialMesh", part)
+                    mesh.MeshId = meshId
+                    mesh.Scale = Vector3.new(2, 2, 2)
+
+                    local velocity = Instance.new("BodyVelocity", part)
+                    velocity.Velocity = Vector3.new(0, -20, 0)
+
+                    game:GetService("Debris"):AddItem(part, 5)
+                end
+
+                while true do
+                    spawnMesh()
+                    wait(0.1)
+                end
+            else
+                print("[ERROR] Duckrain has already been executed")
+            end
+        -- Handle ":G00bysStigmaV2Spam" command
+        elseif inputText == ":g00bysstigmalv2spam" then
+            print("[INFO] Executing G00bysStigmaV2Spam script!")
+
+            -- Decals
+            local function applyDecalsToParts()
+                local decalId = "rbxassetid://7102117818"
+                for _, part in pairs(game.Workspace:GetDescendants()) do
+                    if part:IsA("BasePart") then
+                        for _, face in pairs(Enum.NormalId:GetEnumItems()) do
+                            local decal = Instance.new("Decal", part)
+                            decal.Face = face
+                            decal.Texture = decalId
+                        end
+                    end
+                end
+            end
+            applyDecalsToParts()
+
+            -- Skybox
+            local function updateSkybox()
+                local skyboxId = "rbxassetid://7102117818"
+                local lighting = game:GetService("Lighting")
+                local sky = lighting:FindFirstChildOfClass("Sky") or Instance.new("Sky", lighting)
+                sky.SkyboxBk = skyboxId
+                sky.SkyboxDn = skyboxId
+                sky.SkyboxFt = skyboxId
+                sky.SkyboxLf = skyboxId
+                sky.SkyboxRt = skyboxId
+                sky.SkyboxUp = skyboxId
+            end
+            updateSkybox()
+
+            -- Hint
+            local hint = Instance.new("Hint", game.Workspace)
+            hint.Text = "bravo skid, g00byd0lan exploit de natural disasters survival"
+        -- Handle ":SSC" command
+        elseif inputText == ":ssc" then
+            print("[INFO] Executing SSC script!")
+
+            -- Apply decals
+            local decalId = "rbxassetid://158118263"
+            for _, part in pairs(game.Workspace:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    for _, face in pairs(Enum.NormalId:GetEnumItems()) do
+                        local decal = Instance.new("Decal", part)
+                        decal.Face = face
+                        decal.Texture = decalId
+                    end
+                end
+            end
+
+            -- Update Skybox
+            local function updateSkybox()
+                local skyboxId = "rbxassetid://11664604903"
+                local lighting = game:GetService("Lighting")
+                local sky = lighting:FindFirstChildOfClass("Sky") or Instance.new("Sky", lighting)
+                sky.SkyboxBk = skyboxId
+                sky.SkyboxDn = skyboxId
+                sky.SkyboxFt = skyboxId
+                sky.SkyboxLf = skyboxId
+                sky.SkyboxRt = skyboxId
+                sky.SkyboxUp = skyboxId
+            end
+            updateSkybox()
+
+            -- Play audio
+            local sound = Instance.new("Sound", game.Workspace)
+            sound.SoundId = "rbxassetid://133180219581309"
+            sound.Pitch = 0.15
+            sound.Looped = true
+            sound.Volume = 10
+            sound:Play()
+        -- Handle ":Console" command
+        elseif inputText == ":console" then
+            print("[INFO] Opening console!")
+            game:GetService("StarterGui"):SetCore("DevConsoleVisible", true)
+        -- Handle ":credits" command
+        elseif inputText == ":credits" then
+            local creditsLabel = Instance.new("TextLabel")
+            creditsLabel.Size = textBox.Size
+            creditsLabel.Position = UDim2.new(0.1, 0, 0.2, 30) -- Below cmds label
+            creditsLabel.BackgroundColor3 = textBox.BackgroundColor3
+            creditsLabel.BackgroundTransparency = textBox.BackgroundTransparency
+            creditsLabel.TextColor3 = textBox.TextColor3
+            creditsLabel.Font = textBox.Font
+            creditsLabel.TextScaled = textBox.TextScaled
+            creditsLabel.Text = "Credits to Copilot for the UI and a bit of scripts, Big thanks to tubers93 for most of the scripts and the client replicator, Credits to The Infamous Epic Face for the watermark"
+            creditsLabel.Parent = screenGui
+        else
+            print("[INFO] Unknown command entered: " .. inputText)
+        end
+
+        -- Clear the TextBox
+        textBox.Text = ""
+    end
+end)
+
+-- Gui to Lua
+-- Version: 3.2
+
+-- Instances:
+
+local screenGui = Instance.new("ScreenGui")
+local ImageLabel = Instance.new("ImageLabel")
+local TextLabel = Instance.new("TextLabel")
+
+--Properties:
+
+screenGui.Name = "screenGui"
+screenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+screenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+
+ImageLabel.Parent = screenGui
+ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+ImageLabel.BackgroundTransparency = 1.000
+ImageLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+ImageLabel.BorderSizePixel = 0
+ImageLabel.Position = UDim2.new(-0.000596832193, 0, 0.75, 0)
+ImageLabel.Size = UDim2.new(0, 128, 0, 121)
+ImageLabel.Image = "rbxassetid://15931665651"
+
+TextLabel.Parent = ImageLabel
+TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+TextLabel.BackgroundTransparency = 2.000
+TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.BorderSizePixel = 3
+TextLabel.Position = UDim2.new(0.999189019, 0, -0.12396694, 0)
+TextLabel.Size = UDim2.new(0, 249, 0, 114)
+TextLabel.Font = Enum.Font.GothamBold
+TextLabel.Text = "Welcome to Project Doge, A keyless admin script by tubers93s official account also no this admin is not skidded, only I have it and this script is lua obsuficated so you cant skid it either. Credits: Dsc.gg/DogzXploitz. Enjoy the UI."
+TextLabel.TextColor3 = Color3.fromRGB(0, 0, 0)
+TextLabel.TextScaled = true
+TextLabel.TextSize = 14.000
+TextLabel.TextTransparency = 1.000
+TextLabel.TextWrapped = true
+
+-- Scripts:
+
+local function VCDN_fake_script() -- ImageLabel.MoveImageLabelToBottomRight 
+    local script = Instance.new('LocalScript', ImageLabel)
+
+    local TweenService = game:GetService("TweenService")
+    local Players = game:GetService("Players")
+    
+    local player = Players.LocalPlayer
+    local playerGui = player:WaitForChild("PlayerGui")
+    local screenGui = playerGui:WaitForChild("ScreenGui")
+    local imageLabel = screenGui:WaitForChild("ImageLabel")
+    
+    local function moveToBottomRight()
+        local screenSize = playerGui.AbsoluteSize
+        local targetPosition = UDim2.new(1, -imageLabel.Size.X.Offset, 1, -imageLabel.Size.Y.Offset)
+    
+        local tweenInfo = TweenInfo.new(
+            2, -- Time in seconds
+            Enum.EasingStyle.Sine,
+            Enum.EasingDirection.Out
+        )
+    
+        local tween = TweenService:Create(imageLabel, tweenInfo, {Position = targetPosition})
+        tween:Play()
+    end
+    
+    moveToBottomRight()
+    
+    
+end
+coroutine.wrap(VCDN_fake_script)()
+local function XSNB_fake_script() -- ImageLabel.LocalScript 
+    local script = Instance.new('LocalScript', ImageLabel)
+
+    local imageLabel = script.Parent -- Assuming the script is under the ImageLabel
+    local screenSize = imageLabel.Parent.AbsoluteSize
+    
+    -- Function to move the ImageLabel
+    local function moveImageLabel()
+        -- Center position (1-second delay)
+        imageLabel.Position = UDim2.new(0.5, -imageLabel.Size.X.Offset / 2, 0.5, -imageLabel.Size.Y.Offset / 2)
+        wait(1)
+    
+        -- Bottom-left corner position (smooth transition over 2 seconds)
+        local tweenService = game:GetService("TweenService")
+        local tweenInfo = TweenInfo.new(2, Enum.EasingStyle.Sine, Enum.EasingDirection.Out)
+        local goal = {Position = UDim2.new(0, 0, 1, -imageLabel.Size.Y.Offset)}
+    
+        local tween = tweenService:Create(imageLabel, tweenInfo, goal)
+        tween:Play()
+    end
+    
+    -- Run the function
+    moveImageLabel()
+end
+coroutine.wrap(XSNB_fake_script)()
+local function YRTIAX_fake_script() -- TextLabel.LocalScript 
+    local script = Instance.new('LocalScript', TextLabel)
+
+    local TextLabel = script.Parent
+    
+    wait(3)
+    
+    -- Setting initial transparency
+    TextLabel.BackgroundTransparency = 1
+    TextLabel.TextTransparency = 1
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0.9
+    TextLabel.TextTransparency = 0.9
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0.8
+    TextLabel.TextTransparency = 0.8
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0.7
+    TextLabel.TextTransparency = 0.7
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0.6
+    TextLabel.TextTransparency = 0.6
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0.5
+    TextLabel.TextTransparency = 0.5
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0.4
+    TextLabel.TextTransparency = 0.4
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0.3
+    TextLabel.TextTransparency = 0.3
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0.2
+    TextLabel.TextTransparency = 0.2
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0.1
+    TextLabel.TextTransparency = 0.1
+    
+    wait(0.1)
+    
+    TextLabel.BackgroundTransparency = 0
+    TextLabel.TextTransparency = 0
+end
+coroutine.wrap(YRTIAX_fake_script)()
